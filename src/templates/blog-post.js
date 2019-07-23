@@ -36,8 +36,11 @@ class BlogPostTemplate extends React.Component {
         let jsx = renderMedia(file)
         let markup = renderToStaticMarkup(jsx)
         return markup
-    }}}     
+    }}}
 
+    if (post == null) {
+       return null;
+    }
     return (
       <Layout location={this.props.location} >
         <div style={{ background: '#fff' }}>
@@ -96,7 +99,7 @@ export const pageQuery = graphql`
         title
       }
     }
-    contentfulBlogPost(slug: { eq: $slug }, node_locale: { eq: $locale }) {
+    contentfulBlogPost(slug: { eq: $slug }, node_locale: { eq: $locale }, body:{body: { ne: null }}, title:{ ne: null }) {
       title
       node_locale
       publishDate(formatString: "MMMM Do, YYYY")
