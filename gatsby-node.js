@@ -15,6 +15,7 @@ exports.createPages = ({ graphql, actions }) => {
                 node {
                   title
                   slug
+                  node_locale
                 }
               }
             }
@@ -29,10 +30,11 @@ exports.createPages = ({ graphql, actions }) => {
         const posts = result.data.allContentfulBlogPost.edges
         posts.forEach((post, index) => {
           createPage({
-            path: `/blog/${post.node.slug}/`,
+            path: `/blog/${post.node.node_locale}/${post.node.slug}`,
             component: blogPost,
             context: {
-              slug: post.node.slug
+              slug: post.node.slug,
+              locale: post.node.node_locale
             },
           })
         })

@@ -2,6 +2,7 @@ import React from 'react'
 import { Link, graphql } from 'gatsby'
 import get from 'lodash/get'
 import Helmet from 'react-helmet'
+import Img from 'gatsby-image'
 import styles from './blog.module.css'
 import Layout from "../components/layout"
 import ArticlePreview from '../components/article-preview'
@@ -10,13 +11,14 @@ class CMIndex extends React.Component {
   render() {
     const siteTitle = get(this, 'props.data.site.siteMetadata.title')
     const posts = get(this, 'props.data.allContentfulBlogPost.edges')
+    const idx = get(this, 'props.data.contentfulAsset')
 
     return (
       <Layout location={this.props.location} >
         <div style={{ background: '#fff' }}>
           <Helmet title={siteTitle} />
           <div className={styles.hero}>
-            Blog
+            <Img className={styles.heroImage} alt={idx.title} fixed={idx.fixed} />
           </div>
           <div className="wrapper">
             <h2 className="section-headline">Recent articles</h2>
@@ -50,6 +52,7 @@ export const pageQuery = graphql`
         node {
           title
           slug
+          node_locale
           publishDate(formatString: "MMMM Do, YYYY")
           tags
           heroImage {
@@ -65,5 +68,12 @@ export const pageQuery = graphql`
         }
       }
     }
+    contentfulAsset(contentful_id: {eq: "1qqLGAC87JX41LGcWZ8aDY"}) {
+      title
+      fixed(width: 1180) {
+        ...GatsbyContentfulFixed
+      }
+    }
   }
 `
+

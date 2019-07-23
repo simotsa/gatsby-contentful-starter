@@ -27,33 +27,6 @@ function renderMedia(file) {
   }
 }
 
-const richTextOptions = {
-  renderNode: {
-    [BLOCKS.EMBEDDED_ASSET]: (node) => {
-      const { title, description, file } = node.data.target.fields;
-      const mimeType = file['en-US'].contentType
-      const mimeGroup = mimeType.split('/')[0]
-      switch (mimeGroup) {
-        case 'image':
-          return <img
-            title={ title ? title['en-US'] : null}
-            alt={description ?  description['en-US'] : null}
-            src={file['en-US'].url}
-          />
-        case 'application':
-          return <a
-            alt={description ?  description['en-US'] : null}
-            href={file['en-US'].url}
-            >{ title ? title['en-US'] : file['en-US'].details.fileName }
-          </a>
-        default:
-          return <span style={{backgroundColor: 'red', color: 'white'}}> {mimeType} embedded asset </span>
-      }
-      
-    },
-  }
-}
-
 class BlogPostTemplate extends React.Component {
   render() {
     const post = get(this.props, 'data.contentfulBlogPost')
@@ -82,7 +55,30 @@ class BlogPostTemplate extends React.Component {
               {post.publishDate}
             </p>
             <div>
-            {documentToReactComponents(JSON.parse(post.body.body),richTextOptions)}
+            {documentToReactComponents(JSON.parse(post.body.body),{ renderNode: {
+                  [BLOCKS.EMBEDDED_ASSET]: (node) => {
+                    const { title, description, file } = node.data.target.fields;
+                    const mimeType = file[post.node_locale].contentType
+                    const mimeGroup = mimeType.split('/')[0]
+                    switch (mimeGroup) {
+                        case 'image':
+                        return <img
+                            title={ title ? title[post.node_locale] : null}
+                            alt={description ?  description[post.node_locale] : null}
+                            src={file[post.node_locale].url}
+                        />
+                        case 'application':
+                        return <a
+                            alt={description ?  description[post.node_locale] : null}
+                            href={file[post.node_locale].url}
+                            >{ title ? title[post.node_locale] : file[post.node_locale].details.fileName }
+                        </a>
+                        default:
+                        return <span style={{backgroundColor: 'red', color: 'white'}}> {mimeType} embedded asset </span>
+                    }
+                  }
+              }})
+            }
             </div>
           </div>
         </div>
@@ -94,14 +90,15 @@ class BlogPostTemplate extends React.Component {
 export default BlogPostTemplate
 
 export const pageQuery = graphql`
-  query BlogPostBySlug($slug: String!) {
+  query BlogPostBySlug($slug: String!, $locale: String!) {
     site {
       siteMetadata {
         title
       }
     }
-    contentfulBlogPost(slug: { eq: $slug }) {
+    contentfulBlogPost(slug: { eq: $slug }, node_locale: { eq: $locale }) {
       title
+      node_locale
       publishDate(formatString: "MMMM Do, YYYY")
       heroImage {
         fluid(maxWidth: 1180, background: "rgb:000000") {
