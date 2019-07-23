@@ -6,7 +6,7 @@ import styles from './blog.module.css'
 import Layout from "../components/layout"
 import ArticlePreview from '../components/article-preview'
 
-class BlogIndex extends React.Component {
+class EMIndex extends React.Component {
   render() {
     const siteTitle = get(this, 'props.data.site.siteMetadata.title')
     const posts = get(this, 'props.data.allContentfulBlogPost.edges')
@@ -36,16 +36,16 @@ class BlogIndex extends React.Component {
   }
 }
 
-export default BlogIndex
+export default EMIndex
 
 export const pageQuery = graphql`
-  query BlogIndexQuery {
+  query EMIndexQuery {
     site {
       siteMetadata {
         title
       }
     }
-    allContentfulBlogPost(sort: { fields: [publishDate], order: DESC }) {
+    allContentfulBlogPost(sort: { fields: [publishDate], order: DESC },filter: {node_locale: {eq: "en-US"}, title: {ne: null}}) {
       edges {
         node {
           title
