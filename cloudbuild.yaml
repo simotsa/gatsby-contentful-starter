@@ -8,6 +8,9 @@ steps:
   - name: node:10.15.1
     entrypoint: yarn
     args: ["build"]
+    env:
+      - 'CONTENTFUL_SPACE_ID=$_SPACE_ID'
+      - 'CONTENTFUL_ACCESS_TOKEN=$_ACCESS_TOKEN'
   - name: "node:10.15.1"
     entrypoint: "./node_modules/.bin/firebase"
     args: ["deploy", "--project", "$PROJECT_ID", "--token", "$_TOKEN"]
