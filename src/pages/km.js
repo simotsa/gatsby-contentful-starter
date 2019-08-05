@@ -7,7 +7,7 @@ import styles from './blog.module.css'
 import Layout from "../components/layout"
 import ArticlePreview from '../components/article-preview'
 
-class EMIndex extends React.Component {
+class KMIndex extends React.Component {
   render() {
     const siteTitle = get(this, 'props.data.site.siteMetadata.title')
     const posts = get(this, 'props.data.allContentfulBlogPost.edges')
@@ -38,16 +38,16 @@ class EMIndex extends React.Component {
   }
 }
 
-export default EMIndex
+export default KMIndex
 
 export const pageQuery = graphql`
-  query EMIndexQuery {
+  query KMIndexQuery {
     site {
       siteMetadata {
         title
       }
     }
-    allContentfulBlogPost(sort: { fields: [publishDate], order: DESC },filter: {node_locale: {eq: "en-US"}, tags: {in: "em"}}) {
+    allContentfulBlogPost(sort: { fields: [publishDate], order: DESC },filter: {tags: {in: "km"}}) {
       edges {
         node {
           title
@@ -68,7 +68,7 @@ export const pageQuery = graphql`
         }
       }
     }
-    contentfulAsset(contentful_id: {eq: "6DIrcx54YhJsSKzbHVDj8D"}) {
+    contentfulAsset(contentful_id: {eq: "1qqLGAC87JX41LGcWZ8aDY"}) {
       title
       fixed(width: 1180) {
         ...GatsbyContentfulFixed
@@ -76,3 +76,4 @@ export const pageQuery = graphql`
     }
   }
 `
+

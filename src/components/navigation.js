@@ -17,6 +17,9 @@ export default () => (
       <li className={styles.navigationItem}>
         <Link to="/mm/">國語事工</Link>
       </li>
+      <li className={styles.navigationItem}>
+        <Link to="/km/">Children Ministry</Link>
+      </li>
     </ul>
   </nav>
 )
