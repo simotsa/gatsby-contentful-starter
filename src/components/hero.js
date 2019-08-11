@@ -11,5 +11,7 @@ export default ({ data }) => (
       <p className={styles.heroTitle}>{data.title}</p>
       <p>{data.shortBio.shortBio}</p>
     </div>
+    <p>{data.address}</p>
+    <p>{data.phone}</p>
   </div>
 )

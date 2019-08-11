@@ -83,6 +83,8 @@ export const pageQuery = graphql`
               ...GatsbyContentfulFluid_tracedSVG
             }
           }
+          address
+          phone
         }
       }
     }
