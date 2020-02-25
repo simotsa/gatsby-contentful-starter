@@ -47,7 +47,7 @@ export const pageQuery = graphql`
         title
       }
     }
-    allContentfulBlogPost(sort: { fields: [publishDate], order: DESC },filter: {tags: {in: "km"}}) {
+    allContentfulBlogPost(sort: { fields: [publishDate], order: DESC },filter: {node_locale: {eq: "en-US"}, tags: {in: "km"}}) {
       edges {
         node {
           title
