@@ -44,7 +44,7 @@ export const pageQuery = graphql`
         title
       }
     }
-    allContentfulBlogPost(sort: { fields: [publishDate], order: DESC },filter: {title: {ne: null},tags: {in: "general"}}) {
+    allContentfulBlogPost(sort: { fields: [publishDate], order: DESC },filter: {title: {ne: null},tags: {in: "general"},node_locale: {eq: "en-US"}}) {
       edges {
         node {
           title
