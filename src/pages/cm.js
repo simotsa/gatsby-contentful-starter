@@ -21,7 +21,6 @@ class CMIndex extends React.Component {
             <Img className={styles.heroImage} alt={idx.title} fixed={idx.fixed} />
           </div>
           <div className="wrapper">
-            <h2 className="section-headline">Recent articles</h2>
             <ul className="article-list">
               {posts.map(({ node }) => {
                 return (
@@ -47,7 +46,7 @@ export const pageQuery = graphql`
         title
       }
     }
-    allContentfulBlogPost(sort: { fields: [publishDate], order: DESC },filter: {node_locale: {eq: "zh"}, tags: {in: "cm"}}) {
+    allContentfulBlogPost(sort: { fields: [publishDate], order: DESC },filter: {node_locale: {eq: "en-US"}, tags: {in: "cm"}}) {
       edges {
         node {
           title
@@ -68,7 +67,7 @@ export const pageQuery = graphql`
         }
       }
     }
-    contentfulAsset(contentful_id: {eq: "1qqLGAC87JX41LGcWZ8aDY"}) {
+    contentfulAsset(title: {eq: "cm-index"}) {
       title
       fixed(width: 1180) {
         ...GatsbyContentfulFixed

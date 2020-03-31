@@ -21,7 +21,6 @@ class KMIndex extends React.Component {
             <Img className={styles.heroImage} alt={idx.title} fixed={idx.fixed} />
           </div>
           <div className="wrapper">
-            <h2 className="section-headline">Recent articles</h2>
             <ul className="article-list">
               {posts.map(({ node }) => {
                 return (
@@ -68,7 +67,7 @@ export const pageQuery = graphql`
         }
       }
     }
-    contentfulAsset(contentful_id: {eq: "1qqLGAC87JX41LGcWZ8aDY"}) {
+    contentfulAsset(title: {eq: "km-index"}) {
       title
       fixed(width: 1180) {
         ...GatsbyContentfulFixed

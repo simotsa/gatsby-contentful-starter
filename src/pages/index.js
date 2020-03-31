@@ -18,7 +18,6 @@ class RootIndex extends React.Component {
           <Helmet title={siteTitle} />
           <Hero data={author.node} />
           <div className="wrapper">
-            <h2 className="section-headline">Recent articles</h2>
             <ul className="article-list">
               {posts.map(({ node }) => {
                 return (
@@ -65,7 +64,7 @@ export const pageQuery = graphql`
         }
       }
     }
-    allContentfulPerson(filter: { contentful_id: { eq: "3gR8632o3BIHAcKQIotiit" } }) {
+    allContentfulPerson(filter: { name: { eq: "index" } }) {
       edges {
         node {
           name

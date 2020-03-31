@@ -21,7 +21,6 @@ class EMIndex extends React.Component {
             <Img className={styles.heroImage} alt={idx.title} fixed={idx.fixed} />
           </div>
           <div className="wrapper">
-            <h2 className="section-headline">Recent articles</h2>
             <ul className="article-list">
               {posts.map(({ node }) => {
                 return (
@@ -68,7 +67,7 @@ export const pageQuery = graphql`
         }
       }
     }
-    contentfulAsset(contentful_id: {eq: "6DIrcx54YhJsSKzbHVDj8D"}) {
+    contentfulAsset(title: {eq: "em-index"}) {
       title
       fixed(width: 1180) {
         ...GatsbyContentfulFixed
