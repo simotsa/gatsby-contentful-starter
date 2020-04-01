@@ -2,8 +2,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 20vh;
-  max-height: 240px;
+  height: 36vh;
+  max-height: 300px;
   background: #e1e1e1;
   font-size: 2em;
   overflow: hidden;
