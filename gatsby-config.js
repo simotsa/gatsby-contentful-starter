@@ -18,7 +18,7 @@ if (!spaceId || !accessToken) {
 
 module.exports = {
   siteMetadata: {
-    title: 'Gatsby Contentful starter',
+    title: 'Markham Chinese Alliance Church 麥咸華人宣道會',
   },
   pathPrefix: '/gatsby-contentful-starter',
   plugins: [
