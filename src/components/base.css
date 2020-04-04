@@ -27,8 +27,12 @@ h3 {
   font-weight: normal;
 }
 
-a {
+h1,h2,h3 > a {
   color: currentColor;
+}
+
+a {
+  color: blue;
 }
 
 .wrapper {
