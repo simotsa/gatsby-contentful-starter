@@ -50,13 +50,6 @@ class BlogPostTemplate extends React.Component {
           </div>
           <div className="wrapper">
             <h1 className="section-headline">{post.title}</h1>
-            <p
-              style={{
-                display: 'block',
-              }}
-            >
-              {post.publishDate}
-            </p>
             <div>
             {documentToReactComponents(JSON.parse(post.body.body),{ renderNode: {
                   [BLOCKS.EMBEDDED_ASSET]: (node) => {
@@ -102,7 +95,6 @@ export const pageQuery = graphql`
     contentfulBlogPost(slug: { eq: $slug }, node_locale: { eq: $locale }, body:{body: { ne: null }}, title:{ ne: null }) {
       title
       node_locale
-      publishDate(formatString: "MMMM Do, YYYY")
       heroImage {
         fluid(maxWidth: 1180, background: "rgb:000000") {
           ...GatsbyContentfulFluid_tracedSVG
