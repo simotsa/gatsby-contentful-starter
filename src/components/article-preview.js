@@ -13,7 +13,7 @@ export default ({ article }) => (
     <small>{article.publishDate}</small>
     <div
       dangerouslySetInnerHTML={{
-        __html: article.description.childMarkdownRemark.html.replace(/([0-9A-Za-z\(\)])\n([0-9A-Za-z\(\)])/g,'$1<br/>$2'),
+        __html: article.description.childMarkdownRemark.html.replace(/<\/p>\n<p>/g,'<br/>'),
       }}
     />
     {article.tags.map(tag => (
