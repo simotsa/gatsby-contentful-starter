@@ -13,4 +13,4 @@ steps:
       - 'CONTENTFUL_ACCESS_TOKEN=$_ACCESS_TOKEN'
   - name: "node:10.15.1"
     entrypoint: "./node_modules/.bin/firebase"
-    args: ["deploy", "--project", "mcac-contentful-preview", "--token", "$_TOKEN"]
+    args: ["deploy", "--project", "mcac-contentful", "--token", "$_TOKEN"]
