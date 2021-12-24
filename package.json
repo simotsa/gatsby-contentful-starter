@@ -7,7 +7,7 @@
     "url": "https://github.com/contentful-userland/gatsby-contentful-starter/issues"
   },
   "engines": {
-    "node": "10"
+    "node": "12"
   },
   "dependencies": {
     "@contentful/rich-text-react-renderer": "^13.4.0",
