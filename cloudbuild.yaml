@@ -4,7 +4,7 @@ steps:
     args: ["install"]
   - name: node:12.22.6
     entrypoint: yarn
-    args: ["add", "firebase-tools"]
+    args: ["add", "firebase-tools@^9.23.3"]
   - name: node:12.22.6
     entrypoint: yarn
     args: ["build"]
