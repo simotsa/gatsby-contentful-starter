@@ -1,16 +1,16 @@
 steps:
-  - name: node:12.22.6
+  - name: node:14.20.0
     entrypoint: yarn
     args: ["install"]
-  - name: node:12.22.6
+  - name: node:14.20.0
     entrypoint: yarn
     args: ["add", "firebase-tools@^9.23.3"]
-  - name: node:12.22.6
+  - name: node:14.20.0
     entrypoint: yarn
     args: ["build"]
     env:
       - 'CONTENTFUL_SPACE_ID=$_SPACE_ID'
       - 'CONTENTFUL_ACCESS_TOKEN=$_ACCESS_TOKEN'
-  - name: "node:12.22.6"
+  - name: "node:14.20.0"
     entrypoint: "./node_modules/.bin/firebase"
     args: ["deploy", "--project", "mcac-contentful-preview", "--token", "$_TOKEN"]
