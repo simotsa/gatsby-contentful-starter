@@ -3,7 +3,7 @@ import { Link, graphql } from 'gatsby'
 import get from 'lodash/get'
 import Helmet from 'react-helmet'
 import { GatsbyImage, getImage } from 'gatsby-plugin-image'
-import styles from './blog.module.css'
+import * as styles from './blog.module.css'
 import Layout from "../components/layout"
 import ArticlePreview from '../components/article-preview'
 
@@ -46,7 +46,10 @@ export const pageQuery = graphql`
         title
       }
     }
-    allContentfulBlogPost(sort: { fields: [publishDate], order: DESC },filter: {node_locale: {eq: "en-US"}, tags: {in:"mm"}}) {
+    allContentfulBlogPost(
+       sort: {publishDate: DESC},
+       filter: {node_locale: {eq: "en-US"}, tags: {in: "mm"}}
+    ) {
       edges {
         node {
           title

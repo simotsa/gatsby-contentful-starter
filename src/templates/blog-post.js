@@ -5,7 +5,7 @@ import get from 'lodash/get'
 import { GatsbyImage, getImage } from 'gatsby-plugin-image'
 import Layout from '../components/layout'
 
-import heroStyles from '../components/hero.module.css'
+import * as heroStyles from '../components/hero.module.css'
 import { BLOCKS, MARKS, INLINES } from '@contentful/rich-text-types';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import { renderToStaticMarkup } from 'react-dom/server'
@@ -53,6 +53,14 @@ class BlogPostTemplate extends React.Component {
             <div>
             {documentToReactComponents(JSON.parse(post.body.raw),{ renderNode: {
                   [BLOCKS.EMBEDDED_ASSET]: (node) => {
+
+                    const fields = node?.data?.target?.fields;
+
+                    if (!fields) {
+                      console.warn("Missing Contentful rich-text target fields:", node?.data?.target?.sys?.id);
+                      return null;
+                    }
+
                     const { title, description, file } = node.data.target.fields;
                     const mimeType = file[post.node_locale].contentType
                     const mimeGroup = mimeType.split('/')[0]

@@ -43,7 +43,10 @@ export const pageQuery = graphql`
         title
       }
     }
-    allContentfulBlogPost(sort: { fields: [publishDate], order: DESC },filter: {title: {ne: null},tags: {in: "general"},node_locale: {eq: "en-US"}}) {
+    allContentfulBlogPost(
+       sort: {publishDate: DESC},
+       filter: {title: {ne: null},tags: {in: "general"},node_locale: {eq: "en-US"}}
+    ) {
       edges {
         node {
           title
@@ -75,7 +78,7 @@ export const pageQuery = graphql`
             shortBio
           }
           title
-          image {
+          heroImage: image {
             gatsbyImageData(
               width: 1180
               height: 480
