@@ -1,11 +1,11 @@
 steps:
-  - name: node:14.20.0
+  - name: node:18.0.0
     entrypoint: yarn
     args: ["install"]
-  - name: node:14.20.0
+  - name: node:18.0.0
     entrypoint: yarn
     args: ["add", "firebase-tools@^9.23.3"]
-  - name: node:14.20.0
+  - name: node:18.0.0
     entrypoint: yarn
     args: ["build"]
     env:
