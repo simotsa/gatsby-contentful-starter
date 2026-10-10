@@ -2,7 +2,7 @@ import React from 'react'
 import { Link, graphql } from 'gatsby'
 import get from 'lodash/get'
 import Helmet from 'react-helmet'
-import Img from 'gatsby-image'
+import { GatsbyImage, getImage } from 'gatsby-plugin-image'
 import styles from './blog.module.css'
 import Layout from "../components/layout"
 import ArticlePreview from '../components/article-preview'
@@ -18,7 +18,7 @@ class KMIndex extends React.Component {
         <div style={{ background: '#fff' }}>
           <Helmet title={siteTitle} />
           <div className={styles.hero}>
-            <Img className={styles.heroImage} alt={idx.title} fixed={idx.fixed} />
+            <GatsbyImage className={styles.heroImage} alt={idx.title} image={getImage(idx)} />
           </div>
           <div className="wrapper">
             <ul className="article-list">
@@ -55,9 +55,12 @@ export const pageQuery = graphql`
           publishDate(formatString: "MMMM Do, YYYY")
           tags
           heroImage {
-            fluid(maxWidth: 350, maxHeight: 196, resizingBehavior: SCALE) {
-              ...GatsbyContentfulFluid_tracedSVG
-            }
+            gatsbyImageData(
+              width: 350
+              height: 196
+              resizingBehavior: SCALE
+              placeholder: TRACED_SVG
+            )
           }
           description {
             childMarkdownRemark {
@@ -69,9 +72,7 @@ export const pageQuery = graphql`
     }
     contentfulAsset(title: {eq: "km-index"}) {
       title
-      fixed(width: 1180) {
-        ...GatsbyContentfulFixed
-      }
+      gatsbyImageData(width: 1180)
     }
   }
 `

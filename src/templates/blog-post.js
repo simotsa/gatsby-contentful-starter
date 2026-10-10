@@ -2,7 +2,7 @@ import React from 'react'
 import { graphql } from 'gatsby'
 import Helmet from 'react-helmet'
 import get from 'lodash/get'
-import Img from 'gatsby-image'
+import { GatsbyImage, getImage } from 'gatsby-plugin-image'
 import Layout from '../components/layout'
 
 import heroStyles from '../components/hero.module.css'
@@ -46,12 +46,12 @@ class BlogPostTemplate extends React.Component {
         <div style={{ background: '#fff' }}>
           <Helmet title={`${post.title} | ${siteTitle}`} />
           <div className={heroStyles.hero}>
-            <Img className={heroStyles.heroImage} alt={post.title} fluid={post.heroImage.fluid} />
+            <GatsbyImage className={heroStyles.heroImage} alt={post.title} image={getImage(post.heroImage)} />
           </div>
           <div className="wrapper">
             <h1 className="section-headline">{post.title}</h1>
             <div>
-            {documentToReactComponents(JSON.parse(post.body.body),{ renderNode: {
+            {documentToReactComponents(JSON.parse(post.body.raw),{ renderNode: {
                   [BLOCKS.EMBEDDED_ASSET]: (node) => {
                     const { title, description, file } = node.data.target.fields;
                     const mimeType = file[post.node_locale].contentType
@@ -92,16 +92,18 @@ export const pageQuery = graphql`
         title
       }
     }
-    contentfulBlogPost(slug: { eq: $slug }, node_locale: { eq: $locale }, body:{body: { ne: null }}, title:{ ne: null }) {
+    contentfulBlogPost(slug: { eq: $slug }, node_locale: { eq: $locale }, title:{ ne: null }) {
       title
       node_locale
       heroImage {
-        fluid(maxWidth: 1180, background: "rgb:000000") {
-          ...GatsbyContentfulFluid_tracedSVG
-        }
+        gatsbyImageData(
+          width: 1180
+          backgroundColor: "#000000"
+          placeholder: TRACED_SVG
+        )
       }
       body {
-        body
+        raw
       }
     }
   }
