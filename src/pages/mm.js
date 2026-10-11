@@ -2,8 +2,8 @@ import React from 'react'
 import { Link, graphql } from 'gatsby'
 import get from 'lodash/get'
 import Helmet from 'react-helmet'
-import Img from 'gatsby-image'
-import styles from './blog.module.css'
+import { GatsbyImage, getImage } from 'gatsby-plugin-image'
+import * as styles from './blog.module.css'
 import Layout from "../components/layout"
 import ArticlePreview from '../components/article-preview'
 
@@ -18,7 +18,7 @@ class MMIndex extends React.Component {
         <div style={{ background: '#fff' }}>
           <Helmet title={siteTitle} />
           <div className={styles.hero}>
-            <Img className={styles.heroImage} alt={idx.title} fixed={idx.fixed} />
+            <GatsbyImage className={styles.heroImage} alt={idx.title} image={getImage(idx)} />
           </div>
           <div className="wrapper">
             <ul className="article-list">
@@ -46,7 +46,10 @@ export const pageQuery = graphql`
         title
       }
     }
-    allContentfulBlogPost(sort: { fields: [publishDate], order: DESC },filter: {node_locale: {eq: "en-US"}, tags: {in:"mm"}}) {
+    allContentfulBlogPost(
+       sort: {publishDate: DESC},
+       filter: {node_locale: {eq: "en-US"}, tags: {in: "mm"}}
+    ) {
       edges {
         node {
           title
@@ -55,9 +58,12 @@ export const pageQuery = graphql`
           publishDate(formatString: "MMMM Do, YYYY")
           tags
           heroImage {
-            fluid(maxWidth: 350, maxHeight: 196, resizingBehavior: SCALE) {
-              ...GatsbyContentfulFluid_tracedSVG
-            }
+            gatsbyImageData(
+              width: 350
+              height: 196
+              resizingBehavior: SCALE
+              placeholder: TRACED_SVG
+            )
           }
           description {
             childMarkdownRemark {
@@ -69,9 +75,7 @@ export const pageQuery = graphql`
     }
     contentfulAsset(title: {eq: "mm-index"}) {
       title
-      fixed(width: 1180) {
-        ...GatsbyContentfulFixed
-      }
+      gatsbyImageData(width: 1180)
     }
   }
 `

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'gatsby'
-import styles from './navigation.module.css'
+import * as styles from './navigation.module.css'
 
 export default () => (
   <nav role="navigation">
@@ -9,10 +9,10 @@ export default () => (
         <Link to="/">HOME - 主頁</Link>
       </li>
       <li className={styles.navigationItem}>
-        <Link to="/cm/">粵語事工</Link>
+        <Link to="/cm/">CM - 粵語事工</Link>
       </li>
       <li className={styles.navigationItem}>
-        <Link to="/mm/">國語事工</Link>
+        <Link to="/mm/">MM - 國語事工</Link>
       </li>
       <li className={styles.navigationItem}>
         <Link to="/em/">English Ministry</Link>
