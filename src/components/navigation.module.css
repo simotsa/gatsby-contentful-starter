@@ -18,3 +18,30 @@
 .navigationItem a {
   color: currentColor;
 }
+
+/* Mobile navigation */
+@media screen and (max-width: 600px) {
+  .navigation {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+    width: 100%;
+    height: auto;
+    max-height: none;
+    padding: 8px 0;
+    box-sizing: border-box;
+    row-gap: 4px;
+  }
+
+  .navigationItem {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    margin: 0 6px;
+  }
+
+  .navigationItem a {
+    white-space: nowrap;
+  }
+}
