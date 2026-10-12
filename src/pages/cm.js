@@ -11,14 +11,14 @@ class CMIndex extends React.Component {
   render() {
     const siteTitle = get(this, 'props.data.site.siteMetadata.title')
     const posts = get(this, 'props.data.allContentfulBlogPost.edges')
-    const idx = get(this, 'props.data.contentfulAsset')
+    const page = get(this, 'props.data.contentfulPage')
 
     return (
       <Layout location={this.props.location} >
         <div style={{ background: '#fff' }}>
           <Helmet title={siteTitle} />
           <div className={styles.hero}>
-            <GatsbyImage className={styles.heroImage} alt={idx.title} image={getImage(idx)} />
+            <GatsbyImage className={styles.heroImage} alt={page.title} image={getImage(page.hero)} />
           </div>
           <div className="wrapper">
             <ul className="article-list">
@@ -73,9 +73,12 @@ export const pageQuery = graphql`
         }
       }
     }
-    contentfulAsset(title: {eq: "cm-index"}) {
+    contentfulPage(title: { eq: "cm-tab" })
+    {
       title
-      gatsbyImageData(width: 1180)
+      hero {
+        gatsbyImageData(width: 1180)
+      }
     }
   }
 `
