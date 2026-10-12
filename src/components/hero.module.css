@@ -20,7 +20,7 @@
     Ensure golden ratio for the hero size while limiting it to some extend to
     the viewport width
   */
-  height: 36vh;
+  height: 38vh;
   max-height: 300px;
   animation: heroZoom 5s ease-out forwards;
 }
@@ -38,13 +38,13 @@
 
 @media(min-width: 600px) {
   .heroDetails {
-    font-size: 16px;
+    font-size: 24px;
   }
 }
 
 @media(min-width: 1000px) {
   .heroDetails {
-    font-size: 20px;
+    font-size: 32px;
   }
 }
 
