@@ -46,10 +46,10 @@ class BlogPostTemplate extends React.Component {
         <div style={{ background: '#fff' }}>
           <Helmet title={`${post.title} | ${siteTitle}`} />
           <div className={heroStyles.hero}>
-            <GatsbyImage className={heroStyles.heroImage} alt={post.title} image={getImage(post.heroImage)} />
+            <GatsbyImage className={heroStyles.heroImage} alt={post.title} image={getImage(post.heroImage)} objectFit="contain" backgroundColor={post.heroBgColor}/>
+            <h1 className="{heroStyles.heroDetails}">{post.title}</h1>
           </div>
           <div className="wrapper">
-            <h1 className="section-headline">{post.title}</h1>
             <div>
             {documentToReactComponents(JSON.parse(post.body.raw),{ renderNode: {
                   [BLOCKS.EMBEDDED_ASSET]: (node) => {
@@ -106,10 +106,11 @@ export const pageQuery = graphql`
       heroImage {
         gatsbyImageData(
           width: 1180
-          backgroundColor: "#000000"
-          placeholder: TRACED_SVG
+          layout: FULL_WIDTH
+          resizingBehavior: SCALE
         )
       }
+      heroBgColor
       body {
         raw
       }
