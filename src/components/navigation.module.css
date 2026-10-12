@@ -27,7 +27,8 @@
   white-space: nowrap;
 }
 
-.navigationItem a[aria-current="page"] {
+.navigationItem a[aria-current="page"],
+.navigationItem a.blogActive {
   border-color: #555;
   background-color: #585858;
   color: white;

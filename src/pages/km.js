@@ -19,6 +19,7 @@ class KMIndex extends React.Component {
           <Helmet title={siteTitle} />
           <div className={styles.hero}>
             <GatsbyImage className={styles.heroImage} alt={page.title} image={getImage(page.hero)} />
+            <h1 className={styles.heroDetails}>{page.description}</h1>
           </div>
           <div className="wrapper">
             <ul className="article-list">
@@ -79,6 +80,7 @@ export const pageQuery = graphql`
       hero {
         gatsbyImageData(width: 1180)
       }
+      description
     }
   }
 `
