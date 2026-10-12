@@ -1,3 +1,8 @@
+@keyframes heroBlur {
+  from { filter: brightness(0.5); }
+  to   { filter: brightness(1); }
+}
+
 .hero {
   display: flex;
   justify-content: center;
@@ -7,4 +12,5 @@
   background: #e1e1e1;
   font-size: 2em;
   overflow: hidden;
+  animation: heroBlur 2s ease-out both;
 }

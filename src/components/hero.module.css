@@ -3,6 +3,16 @@
   background: #000;
   color: yellow;
   text-align: center;
+  overflow: hidden;
+}
+
+@keyframes heroZoom {
+  from {
+    transform: scale(1.1);
+  }
+  to {
+    transform: scale(1);
+  }
 }
 
 .heroImage {
@@ -12,20 +22,17 @@
   */
   height: 36vh;
   max-height: 300px;
+  animation: heroZoom 5s ease-out forwards;
 }
 
 .heroDetails {
   position: absolute;
-  right: 30%;
   top: 15px;
   transform: none;
   font-size: 14px;
   padding: 0 0.5em;
-  width: 70%;
-  max-width: 70%;
   box-sizing: border-box;
   text-align: right;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
   z-index: 1;
 }
 
@@ -46,7 +53,29 @@
 }
 
 .heroTitle {
+  font-weight: 700;
+  text-shadow: 0 2px 8px rgb(0 0 0 / 45%);
   margin: 0;
-  font-size: 1.125em;
+  font-size: 1.25em;
   font-weight: bold;
+  position: relative;
+  width: 100%;
+}
+
+.heroTitle::before {
+  content: "";
+  float: right;
+  width: 30%;
+  height: 1.2em;
+}
+
+.heroTitle + p {
+  background: rgb(0 0 0 / 30%);
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 0.85em;
+  font-weight: 400;
+  line-height: 1.7;
+  letter-spacing: 0.02em;
+  margin-top: 0.8em;
 }
