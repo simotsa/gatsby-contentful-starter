@@ -1,6 +1,5 @@
 import React from 'react'
 import { graphql } from 'gatsby'
-import Helmet from 'react-helmet'
 import get from 'lodash/get'
 import { GatsbyImage, getImage } from 'gatsby-plugin-image'
 import Layout from '../components/layout'
@@ -8,6 +7,11 @@ import Layout from '../components/layout'
 import * as heroStyles from '../components/hero.module.css'
 import { BLOCKS, MARKS, INLINES } from '@contentful/rich-text-types';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
+
+export function Head({ data }) {
+  const siteTitle = get(data, 'site.siteMetadata.title')
+  return <title>{siteTitle}</title>
+}
 
 class BlogPostTemplate extends React.Component {
   render() {
@@ -20,7 +24,6 @@ class BlogPostTemplate extends React.Component {
     return (
       <Layout location={this.props.location} >
         <div style={{ background: '#fff' }}>
-          <Helmet title={`${post.title} | ${siteTitle}`} />
           <div className={heroStyles.hero}>
             <GatsbyImage className={heroStyles.heroImage} alt={post.title} image={getImage(post.heroImage)} objectFit="contain" backgroundColor={post.heroBgColor}/>
             <h1 className="{heroStyles.heroDetails}">{post.title}</h1>

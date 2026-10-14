@@ -1,10 +1,14 @@
 import React from 'react'
 import { graphql } from 'gatsby'
 import get from 'lodash/get'
-import Helmet from 'react-helmet'
 import Hero from '../components/hero'
 import Layout from '../components/layout'
 import ArticlePreview from '../components/article-preview'
+
+export function Head({ data }) {
+  const siteTitle = get(data, 'site.siteMetadata.title')
+  return <title>{siteTitle}</title>
+}
 
 class RootIndex extends React.Component {
   render() {
@@ -15,7 +19,6 @@ class RootIndex extends React.Component {
     return (
       <Layout location={this.props.location} >
         <div style={{ background: '#fff' }}>
-          <Helmet title={siteTitle} />
           <Hero data={author.node} />
           <div className="wrapper">
             <ul className="article-list">

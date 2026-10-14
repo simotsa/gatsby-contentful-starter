@@ -23,7 +23,6 @@ module.exports = {
   pathPrefix: '/gatsby-contentful-starter',
   plugins: [
     'gatsby-transformer-remark',
-    'gatsby-plugin-react-helmet',
     'gatsby-plugin-image',
     {
       resolve: 'gatsby-source-contentful',

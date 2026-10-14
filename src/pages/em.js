@@ -1,11 +1,15 @@
 import React from 'react'
 import { Link, graphql } from 'gatsby'
 import get from 'lodash/get'
-import Helmet from 'react-helmet'
 import { GatsbyImage, getImage } from 'gatsby-plugin-image'
 import * as styles from './blog.module.css'
 import Layout from "../components/layout"
 import ArticlePreview from '../components/article-preview'
+
+export function Head({ data }) {
+  const siteTitle = get(data, 'site.siteMetadata.title')
+  return <title>{siteTitle}</title>
+}
 
 class EMIndex extends React.Component {
   render() {
@@ -16,7 +20,6 @@ class EMIndex extends React.Component {
     return (
       <Layout location={this.props.location} >
         <div style={{ background: '#fff' }}>
-          <Helmet title={siteTitle} />
           <div className={styles.hero}>
             <GatsbyImage className={styles.heroImage} alt={page.title} image={getImage(page.hero)} />
             <h1 className={styles.heroDetails}>{page.description}</h1>
