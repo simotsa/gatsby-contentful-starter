@@ -31,10 +31,7 @@ class BlogPostTemplate extends React.Component {
 		renderNode: {
 		    [BLOCKS.EMBEDDED_ASSET]: (node) => {
 		    const id = node?.data?.target?.sys?.id;
-
-		    const asset = post.body.references?.find(
-			(item) => item.contentful_id === id
-		    );
+		    const asset = post.body.references?.find((item) => item.contentful_id === id);
 
 		    if (!asset?.file?.url) {
 			console.warn("Missing Contentful asset:", id);
@@ -73,6 +70,26 @@ class BlogPostTemplate extends React.Component {
 			</a>
 		    );
 		    },
+                    [BLOCKS.EMBEDDED_ENTRY]: (node) => {
+                    const id = node?.data?.target?.sys?.id;
+
+                    const entry = post.body.references?.find(
+                        (item) => item.contentful_id === id
+                    );
+
+                    if (!entry) {
+                        console.warn("Missing embedded entry:", id);
+                        return null;
+                    }
+
+                    const page = post.tags[0];
+
+                    return (
+                        <a href={`/blog/${page}/${entry.slug}`}>
+                        {entry.title}
+                        </a>
+                    );
+                    },
 		},
 		})}
             </div>
@@ -103,6 +120,7 @@ export const pageQuery = graphql`
         )
       }
       heroBgColor
+      tags
       body {
         raw
         references {
@@ -114,6 +132,11 @@ export const pageQuery = graphql`
               url
               contentType
             }
+          }
+          ... on ContentfulBlogPost {
+            contentful_id
+            title
+            slug
           }
         }
       }
