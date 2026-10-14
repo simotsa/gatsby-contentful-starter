@@ -113,6 +113,17 @@ export const pageQuery = graphql`
       heroBgColor
       body {
         raw
+        references {
+          ... on ContentfulAsset {
+            contentful_id
+            title
+            description
+            file {
+              url
+              contentType
+            }
+          }
+        }
       }
     }
   }
