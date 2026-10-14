@@ -8,35 +8,11 @@ import Layout from '../components/layout'
 import * as heroStyles from '../components/hero.module.css'
 import { BLOCKS, MARKS, INLINES } from '@contentful/rich-text-types';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
-import { renderToStaticMarkup } from 'react-dom/server'
-
-function renderMedia(file) {
-  if (file.contentType === 'video/mp4') {
-    return (
-      <div className='embed-responsive embed-responsive-16by9' style={vidStyle}>
-        <video controls>
-          <source src={file.url} type='video/mp4'/>
-          <p>Your browser doesnt support HTML5 video.</p>
-        </video>
-      </div>
-    )
-  } else if (file.contentType === 'image/jpeg') {
-    return (<img class="img-fluid" src={file.url} />)
-  } else {
-    return (<p>Unknown content type</p>)
-  }
-}
 
 class BlogPostTemplate extends React.Component {
   render() {
     const post = get(this.props, 'data.contentfulBlogPost')
     const siteTitle = get(this.props, 'data.site.siteMetadata.title')
-    const options = { renderNode: { 'embedded-asset-block': (node) => { 
-        let file = node.data.target.fields.file
-        let jsx = renderMedia(file)
-        let markup = renderToStaticMarkup(jsx)
-        return markup
-    }}}
 
     if (post == null) {
        return null;
@@ -51,38 +27,54 @@ class BlogPostTemplate extends React.Component {
           </div>
           <div className="wrapper">
             <div>
-            {documentToReactComponents(JSON.parse(post.body.raw),{ renderNode: {
-                  [BLOCKS.EMBEDDED_ASSET]: (node) => {
+		{documentToReactComponents(JSON.parse(post.body.raw), {
+		renderNode: {
+		    [BLOCKS.EMBEDDED_ASSET]: (node) => {
+		    const id = node?.data?.target?.sys?.id;
 
-                    const fields = node?.data?.target?.fields;
+		    const asset = post.body.references?.find(
+			(item) => item.contentful_id === id
+		    );
 
-                    if (!fields) {
-                      console.warn("Missing Contentful rich-text target fields:", node?.data?.target?.sys?.id);
-                      return null;
-                    }
+		    if (!asset?.file?.url) {
+			console.warn("Missing Contentful asset:", id);
+			return null;
+		    }
 
-                    const { title, description, file } = node.data.target.fields;
-                    const mimeType = file[post.node_locale].contentType
-                    const mimeGroup = mimeType.split('/')[0]
-                    switch (mimeGroup) {
-                        case 'image':
-                        return <img
-                            title={ title ? title[post.node_locale] : null}
-                            alt={description ?  description[post.node_locale] : null}
-                            src={file[post.node_locale].url}
-                        />
-                        case 'application':
-                        return <a
-                            alt={description ?  description[post.node_locale] : null}
-                            href={file[post.node_locale].url}
-                            >{ title ? title[post.node_locale] : file[post.node_locale].details.fileName }
-                        </a>
-                        default:
-                        return <span style={{backgroundColor: 'red', color: 'white'}}> {mimeType} embedded asset </span>
-                    }
-                  }
-              }})
-            }
+		    const { url, contentType } = asset.file;
+		    const mediaUrl = url.startsWith("//")
+			? `https:${url}`
+			: url;
+
+		    if (contentType?.startsWith("image/")) {
+			return (
+			<img
+			    src={mediaUrl}
+			    title={asset.title || ""}
+			    alt={asset.description || asset.title || ""}
+			/>
+			);
+		    }
+
+		    if (contentType?.startsWith("video/")) {
+			return (
+			<div className="embed-responsive embed-responsive-16by9">
+			    <video controls>
+			    <source src={mediaUrl} type={contentType} />
+			    Your browser does not support HTML5 video.
+			    </video>
+			</div>
+			);
+		    }
+
+		    return (
+			<a href={mediaUrl}>
+			{asset.title || "Open attached media"}
+			</a>
+		    );
+		    },
+		},
+		})}
             </div>
           </div>
         </div>
